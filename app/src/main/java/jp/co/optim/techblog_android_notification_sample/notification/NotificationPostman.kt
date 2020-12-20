@@ -4,14 +4,12 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
@@ -22,6 +20,7 @@ import jp.co.optim.techblog_android_notification_sample.R
 import jp.co.optim.techblog_android_notification_sample.activity.CallActivity
 import jp.co.optim.techblog_android_notification_sample.constants.ChannelType
 import jp.co.optim.techblog_android_notification_sample.constants.NotificationId
+import jp.co.optim.techblog_android_notification_sample.extension.logD
 import jp.co.optim.techblog_android_notification_sample.receiver.CallRefusedReceiver
 import java.util.*
 
@@ -32,9 +31,10 @@ class NotificationPostman {
         @StringRes titleResId: Int = R.string.app_name,
         @StringRes messageResId: Int = R.string.notification_message
     ) {
+        logD("post()")
         val title = context.getString(titleResId)
         val message = context.getString(messageResId)
-        val notificationId = NotificationId.generateRandomId()
+        val randomId = NotificationId.generateRandomId()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -47,14 +47,14 @@ class NotificationPostman {
             setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.app_icon))
             setContentTitle(title)
             setContentText(message)
-            setContentIntent(defaultPendingIntent(context, notificationId))
+            setContentIntent(defaultPendingIntent(context, randomId))
             setPriority(NotificationCompat.PRIORITY_HIGH)
             setDefaults(NotificationCompat.DEFAULT_ALL)
             setAutoCancel(true)
             setStyle(NotificationCompat.BigTextStyle().bigText(message))
         }.build()
 
-        manager.notify(notificationId, notification)
+        manager.notify(randomId, notification)
     }
 
     fun postCall(
@@ -62,6 +62,7 @@ class NotificationPostman {
         @StringRes titleResId: Int = R.string.app_name,
         @StringRes messageResId: Int = R.string.notification_call_message
     ) {
+        logD("postCall()")
         val title = context.getString(titleResId)
         val message = context.getString(messageResId)
         val ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
@@ -111,8 +112,19 @@ class NotificationPostman {
     }
 
     fun delete(context: Context, notificationId: Int) {
+        logD("delete($notificationId)")
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.cancel(notificationId)
+    }
+
+    fun findNotification(context: Context, notificationId: Int): Notification? {
+        logD("findNotification($notificationId)")
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notifications = manager.activeNotifications
+        for (notification in notifications) {
+            if (notification.id == notificationId) return notification.notification
+        }
+        return null
     }
 
     private fun defaultPendingIntent(
