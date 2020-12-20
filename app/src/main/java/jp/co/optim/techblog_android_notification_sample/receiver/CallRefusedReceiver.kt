@@ -15,6 +15,7 @@ class CallRefusedReceiver: BroadcastReceiver() {
         logD("onReceive()")
 
         if (context != null) {
+            // 通知領域から着信通知を削除
             notificationPostman.delete(context, NotificationId.CALL.id)
         }
     }

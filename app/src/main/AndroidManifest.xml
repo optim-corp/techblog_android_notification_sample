@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.co.optim.techblog_android_notification_sample">
 
+    <!-- 全画面表示のパーミッション追加 -->
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
 
     <application

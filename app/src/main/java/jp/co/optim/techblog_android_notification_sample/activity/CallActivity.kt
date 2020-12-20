@@ -27,6 +27,7 @@ class CallActivity : AppCompatActivity(), CallingFragment.Callback, TalkingFragm
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
 
+        // 通知領域から着信通知を削除
         notificationPostman.delete(this, NotificationId.CALL.id)
 
         val callAccepted = intent.getBooleanExtra(CALL_ACCEPTED, false)

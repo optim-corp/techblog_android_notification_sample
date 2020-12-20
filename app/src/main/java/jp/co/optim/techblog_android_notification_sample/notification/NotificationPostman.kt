@@ -138,7 +138,7 @@ class NotificationPostman {
     fun findNotification(context: Context, notificationId: Int): Notification? {
         logD("findNotification($notificationId)")
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notifications = manager.activeNotifications
+        val notifications = manager.activeNotifications  // API 23 以降に実装されたメソッド
         for (notification in notifications) {
             if (notification.id == notificationId) return notification.notification
         }
