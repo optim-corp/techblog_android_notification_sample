@@ -26,6 +26,9 @@ import java.util.*
 
 class NotificationPostman {
 
+    /**
+     * 通常の通知をポストする.
+     */
     fun post(
         context: Context,
         @StringRes titleResId: Int = R.string.app_name,
@@ -37,26 +40,31 @@ class NotificationPostman {
         val randomId = NotificationId.generateRandomId()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Android O 以降はチャンネルを実装する必要がある.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(ChannelType.NORMAL.id, title, NotificationManager.IMPORTANCE_HIGH)
             manager.createNotificationChannel(channel)
         }
 
-        val notification = NotificationCompat.Builder(context, ChannelType.NORMAL.id).apply {
-            setSmallIcon(R.drawable.app_icon_small)
-            setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.app_icon))
-            setContentTitle(title)
-            setContentText(message)
-            setContentIntent(defaultPendingIntent(context, randomId))
-            setPriority(NotificationCompat.PRIORITY_HIGH)
-            setDefaults(NotificationCompat.DEFAULT_ALL)
-            setAutoCancel(true)
-            setStyle(NotificationCompat.BigTextStyle().bigText(message))
+        val notification = NotificationCompat.Builder(context, ChannelType.NORMAL.id).apply {  // どのチャンネルかを紐づける.
+            setSmallIcon(R.drawable.app_icon_small)  // ステータスバーで表示されるアプリアイコン
+            setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.app_icon))  // 通知領域内の通知で表示されるアイコン
+            setContentTitle(title)  // 通知タイトル
+            setContentText(message)  // 通知メッセージ
+            setContentIntent(defaultPendingIntent(context, randomId))  // 通知タップ時の挙動. 例の場合はアプリそのものが起動する.
+            setPriority(NotificationCompat.PRIORITY_HIGH)  // プライオリティ (Android O 未満対応)
+            setDefaults(NotificationCompat.DEFAULT_ALL)  // システムデフォルト (Android O 未満対応)
+            setAutoCancel(true)  // タップしたら自動キャンセルする
+            setStyle(NotificationCompat.BigTextStyle().bigText(message))  // スタイル（通知領域内の通知で長い文字を表示する.）
         }.build()
 
         manager.notify(randomId, notification)
     }
 
+    /**
+     * 着信通知をポストする.
+     */
     fun postCall(
         context: Context,
         @StringRes titleResId: Int = R.string.app_name,
@@ -65,7 +73,10 @@ class NotificationPostman {
         logD("postCall()")
         val title = context.getString(titleResId)
         val message = context.getString(messageResId)
-        val ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+
+        // OSに設定された着信音
+        val ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
+        // アプリで専用の着信音を出したい場合は、res/raw 配下に MP3 ファイルを設置して以下で可能.
 //        val ringtoneUri = Uri.parse(String.format(
 //            Locale.US, "%s://%s/%d",
 //            ContentResolver.SCHEME_ANDROID_RESOURCE, context.packageName, R.raw.custom_ringtone
@@ -78,7 +89,7 @@ class NotificationPostman {
                     setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
                 }.build()
-                setSound(ringtoneUri, attributes)
+                setSound(ringtoneUri, attributes)  // 1. チャンネルに着信音を設定
             }
             manager.createNotificationChannel(channel)
         }
@@ -89,34 +100,41 @@ class NotificationPostman {
             setContentTitle(title)
             setContentText(message)
             setPriority(NotificationCompat.PRIORITY_HIGH)
-            setDefaults(NotificationCompat.DEFAULT_SOUND)
-            setCategory(NotificationCompat.CATEGORY_CALL)
+            setDefaults(NotificationCompat.DEFAULT_SOUND)  // 1. システムデフォルトにサウンドを指定 (Android O 未満対応)
+            setCategory(NotificationCompat.CATEGORY_CALL)  // 2. カテゴリにCALLを設定
             setAutoCancel(true)
             setStyle(NotificationCompat.BigTextStyle().bigText(message))
-            setSound(ringtoneUri, AudioManager.STREAM_RING)
-            setFullScreenIntent(callPendingIntent(context, NotificationId.CALL.id), true)
-            addAction(
+            setSound(ringtoneUri, AudioManager.STREAM_RING)  // 1. 通知に着信音を設定 (Android O 未満対応)
+            setFullScreenIntent(callPendingIntent(context, NotificationId.CALL.id), true)  // 3. ContentIntent の代わりに FullScreenIntent を設定
+            addAction(  // 4. 「拒否」ボタンを追加
                 R.drawable.refuse_button,
                 getColorString(context, R.string.button_refuse, R.color.colorRefuse),
                 refusePendingIntent(context, NotificationId.CALL_REFUSE.id)
             )
-            addAction(
+            addAction(  // 4. 「応答」ボタンを追加
                 R.drawable.accept_button,
                 getColorString(context, R.string.button_accept, R.color.colorAccept),
                 callPendingIntent(context, NotificationId.CALL_ACCEPT.id, true)
             )
         }.build()
 
+        // 5. Notificationにフラグを追加
         notification.flags = notification.flags or Notification.FLAG_NO_CLEAR or Notification.FLAG_INSISTENT
         manager.notify(NotificationId.CALL.id, notification)
     }
 
+    /**
+     * 該当のIDに紐づく通知を削除する.
+     */
     fun delete(context: Context, notificationId: Int) {
         logD("delete($notificationId)")
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.cancel(notificationId)
     }
 
+    /**
+     * 該当のIDに紐づく通知が通知領域内に存在していれば取得する.
+     */
     fun findNotification(context: Context, notificationId: Int): Notification? {
         logD("findNotification($notificationId)")
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
