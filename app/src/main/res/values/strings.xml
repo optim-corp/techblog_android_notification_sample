@@ -8,4 +8,7 @@
     <string name="button_accept">Accept</string>
     <string name="button_refuse">Refuse</string>
     <string name="button_end">End</string>
+
+    <string name="notification_message">This is a notification sample.</string>
+    <string name="notification_call_message">This is a notification call sample.</string>
 </resources>

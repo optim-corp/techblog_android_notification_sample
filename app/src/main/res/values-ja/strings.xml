@@ -8,4 +8,7 @@
     <string name="button_accept">応答</string>
     <string name="button_refuse">拒否</string>
     <string name="button_end">終了</string>
+
+    <string name="notification_message">通知サンプルです。</string>
+    <string name="notification_call_message">着信通知サンプルです。</string>
 </resources>
