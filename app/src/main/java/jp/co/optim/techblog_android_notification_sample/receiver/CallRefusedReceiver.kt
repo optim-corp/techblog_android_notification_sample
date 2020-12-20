@@ -9,8 +9,7 @@ import jp.co.optim.techblog_android_notification_sample.notification.Notificatio
 
 class CallRefusedReceiver: BroadcastReceiver() {
 
-    val notificationPostman =
-        NotificationPostman();
+    private val notificationPostman = NotificationPostman();
 
     override fun onReceive(context: Context?, intent: Intent?) {
         logD("onReceive()")

@@ -23,6 +23,7 @@ class CallActivity : AppCompatActivity(), CallingFragment.Callback, TalkingFragm
     private val fragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        logD("onCreate()")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
 

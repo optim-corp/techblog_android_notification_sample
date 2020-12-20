@@ -1,6 +1,6 @@
 package jp.co.optim.techblog_android_notification_sample.constants
 
-import kotlin.random.Random
+import java.util.*
 
 enum class NotificationId(val id: Int) {
 
@@ -12,6 +12,6 @@ enum class NotificationId(val id: Int) {
     ;
 
     companion object {
-        fun generateRandomId(): Int = Random.nextInt()
+        fun generateRandomId(): Int = Random().nextInt()
     }
 }
