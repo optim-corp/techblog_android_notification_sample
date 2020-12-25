@@ -1,8 +1,8 @@
 # techblog_android_notification_sample
 
-OPTiM TechBlog 用の通知サンプルアプリです。
+[OPTiM TECH BLOG](https://tech-blog.optim.co.jp/entry/2020/12/01/100000) 用の通知サンプルアプリです。
 
 ## スクリーンショット
 
-![normal_notification](./image/normal_notification.png)
-![call_notification](./image/call_notification.png)
+<img src="./image/normal_notification.png" width="50%">
+<img src="./image/call_notification.png" width="50%">
