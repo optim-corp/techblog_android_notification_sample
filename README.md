@@ -1,6 +1,6 @@
 # techblog_android_notification_sample
 
-[OPTiM TECH BLOG](https://tech-blog.optim.co.jp/entry/2020/12/01/100000) 用の通知サンプルアプリです。
+[OPTiM TECH BLOG](https://tech-blog.optim.co.jp/entry/2020/12/25/100000) 用の通知サンプルアプリです。
 
 ## スクリーンショット
 
