@@ -12,4 +12,5 @@
 
     <string name="notification_message">通知サンプルです。</string>
     <string name="notification_call_message">着信通知サンプルです。</string>
+    <string name="notification_call_message2">着信通知サンプル2です。</string>
 </resources>

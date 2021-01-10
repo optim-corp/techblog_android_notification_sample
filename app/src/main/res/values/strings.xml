@@ -12,4 +12,5 @@
 
     <string name="notification_message">This is a notification sample.</string>
     <string name="notification_call_message">This is a notification call sample.</string>
+    <string name="notification_call_message2">This is a notification call sample 2.</string>
 </resources>

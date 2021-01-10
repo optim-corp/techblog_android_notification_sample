@@ -68,7 +68,10 @@ class NotificationPostman {
     fun postCall(
         context: Context,
         @StringRes titleResId: Int = R.string.app_name,
-        @StringRes messageResId: Int = R.string.notification_call_message
+        @StringRes messageResId: Int = R.string.notification_call_message,
+        callNotificationId: NotificationId = NotificationId.CALL,
+        callAcceptNotificationId: NotificationId = NotificationId.CALL_ACCEPT,
+        callRefuseNotificationId: NotificationId = NotificationId.CALL_REFUSE
     ) {
         logD("postCall()")
         val title = context.getString(titleResId)
@@ -105,22 +108,22 @@ class NotificationPostman {
             setAutoCancel(true)
             setStyle(NotificationCompat.BigTextStyle().bigText(message))
             setSound(ringtoneUri, AudioManager.STREAM_RING)  // 1. 通知に着信音を設定 (Android O 未満対応)
-            setFullScreenIntent(callPendingIntent(context, NotificationId.CALL.id), true)  // 3. ContentIntent の代わりに FullScreenIntent を設定
+            setFullScreenIntent(callPendingIntent(context, callNotificationId.id), true)  // 3. ContentIntent の代わりに FullScreenIntent を設定
             addAction(  // 4. 「拒否」ボタンを追加
                 R.drawable.refuse_button,
                 getColorString(context, R.string.button_refuse, R.color.colorRefuse),
-                refusePendingIntent(context, NotificationId.CALL_REFUSE.id)
+                refusePendingIntent(context, callRefuseNotificationId.id)
             )
             addAction(  // 4. 「応答」ボタンを追加
                 R.drawable.accept_button,
                 getColorString(context, R.string.button_accept, R.color.colorAccept),
-                callPendingIntent(context, NotificationId.CALL_ACCEPT.id, true)
+                callPendingIntent(context, callAcceptNotificationId.id, true)
             )
         }.build()
 
         // 5. Notificationにフラグを追加
         notification.flags = notification.flags or Notification.FLAG_NO_CLEAR or Notification.FLAG_INSISTENT
-        manager.notify(NotificationId.CALL.id, notification)
+        manager.notify(callNotificationId.id, notification)
     }
 
     /**
