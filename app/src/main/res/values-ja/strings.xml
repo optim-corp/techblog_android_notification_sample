@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">通知サンプル</string>
-
     <string name="button_showCalling">着信画面を表示</string>
     <string name="button_postNotification">通知をポスト</string>
     <string name="button_postCallNotification">着信通知をポスト</string>

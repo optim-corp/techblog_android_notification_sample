@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Notification Sample</string>
-
     <string name="button_showCalling">Show Calling</string>
     <string name="button_postNotification">Post Notification</string>
     <string name="button_postCallNotification">Post Call Notification</string>
