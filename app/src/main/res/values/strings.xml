@@ -4,6 +4,7 @@
     <string name="button_showCalling">Show Calling</string>
     <string name="button_postNotification">Post Notification</string>
     <string name="button_postCallNotification">Post Call Notification</string>
+    <string name="button_postCallNotification2">Post Call Notification 2</string>
 
     <string name="button_accept">Accept</string>
     <string name="button_refuse">Refuse</string>
