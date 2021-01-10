@@ -11,11 +11,13 @@ import jp.co.optim.techblog_android_notification_sample.extension.tag
 import jp.co.optim.techblog_android_notification_sample.fragment.CallingFragment
 import jp.co.optim.techblog_android_notification_sample.fragment.TalkingFragment
 import jp.co.optim.techblog_android_notification_sample.notification.NotificationPostman
+import jp.co.optim.techblog_android_notification_sample.receiver.CallRefusedReceiver
 
 class CallActivity : AppCompatActivity(), CallingFragment.Callback, TalkingFragment.Callback {
 
     companion object {
         const val CALL_ACCEPTED = "call_accepted"
+        const val NOTIFICATION_ID = "notification_id"
     }
 
     private val notificationPostman = NotificationPostman()
@@ -27,8 +29,16 @@ class CallActivity : AppCompatActivity(), CallingFragment.Callback, TalkingFragm
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
 
-        // 通知領域から着信通知を削除
-        notificationPostman.delete(this, NotificationId.CALL.id)
+        // 【調査２】 同じアプリで着信通知を２つ出そうとするとどうなるの？
+        // 着信領域から着信応答もしくは通知タップした着信通知のみを削除.
+        val notificationId = when (intent.getIntExtra(CallRefusedReceiver.NOTIFICATION_ID, 0)) {
+            NotificationId.CALL.id -> NotificationId.CALL
+            NotificationId.CALL_ACCEPT.id -> NotificationId.CALL
+            NotificationId.CALL2.id -> NotificationId.CALL2
+            NotificationId.CALL_ACCEPT2.id -> NotificationId.CALL2
+            else -> return
+        }
+        notificationPostman.delete(this, notificationId.id)
 
         val callAccepted = intent.getBooleanExtra(CALL_ACCEPTED, false)
         logI("Is call accepted: $callAccepted")

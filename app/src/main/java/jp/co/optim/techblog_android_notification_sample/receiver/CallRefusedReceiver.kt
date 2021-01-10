@@ -9,14 +9,24 @@ import jp.co.optim.techblog_android_notification_sample.notification.Notificatio
 
 class CallRefusedReceiver: BroadcastReceiver() {
 
+    companion object {
+        const val NOTIFICATION_ID = "notification_id"
+    }
+
     private val notificationPostman = NotificationPostman();
 
     override fun onReceive(context: Context?, intent: Intent?) {
         logD("onReceive()")
 
-        if (context != null) {
-            // 通知領域から着信通知を削除
-            notificationPostman.delete(context, NotificationId.CALL.id)
+        if (context != null && intent != null) {
+            // 【調査２】 同じアプリで着信通知を２つ出そうとするとどうなるの？
+            // 着信領域から着信拒否した着信通知のみを削除.
+            val notificationId = when (intent.getIntExtra(NOTIFICATION_ID, 0)) {
+                NotificationId.CALL_REFUSE.id -> NotificationId.CALL
+                NotificationId.CALL_REFUSE2.id -> NotificationId.CALL2
+                else -> return
+            }
+            notificationPostman.delete(context, notificationId.id)
         }
     }
 }

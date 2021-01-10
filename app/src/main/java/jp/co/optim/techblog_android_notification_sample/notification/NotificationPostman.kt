@@ -162,7 +162,9 @@ class NotificationPostman {
     ): PendingIntent = PendingIntent.getActivity(
         context,
         notificationId,
-        Intent(context, CallActivity::class.java).putExtra(CallActivity.CALL_ACCEPTED, accepted),
+        Intent(context, CallActivity::class.java)
+            .putExtra(CallActivity.CALL_ACCEPTED, accepted)
+            .putExtra(CallActivity.NOTIFICATION_ID, notificationId),
         PendingIntent.FLAG_UPDATE_CURRENT
     )
 
@@ -171,7 +173,8 @@ class NotificationPostman {
     ): PendingIntent = PendingIntent.getBroadcast(
         context,
         notificationId,
-        Intent(context, CallRefusedReceiver::class.java),
+        Intent(context, CallRefusedReceiver::class.java)
+            .putExtra(CallRefusedReceiver.NOTIFICATION_ID, notificationId),
         PendingIntent.FLAG_UPDATE_CURRENT
     )
 
