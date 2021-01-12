@@ -30,5 +30,12 @@ class MainActivity : AppCompatActivity() {
             logI("Clicked postCallNotification.")
             notificationPostman.postCall(this)
         }
+        // 【通常の通知と着信通知を同じタイミングで一気に出そうとするとどうなるの？】
+        // 着信通知と通常の通知を同時に出す.
+        button_postNotifications.setOnClickListener {
+            logI("Clicked postNotifications.")
+            notificationPostman.post(this)
+            notificationPostman.postCall(this)
+        }
     }
 }
