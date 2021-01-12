@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             logI("Clicked postCallNotification.")
             notificationPostman.postCall(this)
         }
-        // 【調査２】 同じアプリで着信通知を２つ出そうとするとどうなるの？
+        // 【同じアプリで着信通知を２つ出そうとするとどうなるの？】
         // ２つ目の着信通知を出す.
         button_postCallNotification2.setOnClickListener {
             logI("Clicked postCallNotification2.")

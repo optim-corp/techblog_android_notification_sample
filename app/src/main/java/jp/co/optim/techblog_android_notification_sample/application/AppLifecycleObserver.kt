@@ -37,7 +37,7 @@ class AppLifecycleObserver(private val context: Context) : LifecycleObserver {
                 e.printStackTrace()
             }
         }
-        // 【調査２】 同じアプリで着信通知を２つ出そうとするとどうなるの？
+        // 【同じアプリで着信通知を２つ出そうとするとどうなるの？】
         // 着信通知2も削除して着信画面を表示する.
         val notification2 = notificationPostman.findNotification(context, NotificationId.CALL2.id)
         if (notification2 != null) {

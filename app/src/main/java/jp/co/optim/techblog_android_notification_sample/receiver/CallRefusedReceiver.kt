@@ -19,7 +19,7 @@ class CallRefusedReceiver: BroadcastReceiver() {
         logD("onReceive()")
 
         if (context != null && intent != null) {
-            // 【調査２】 同じアプリで着信通知を２つ出そうとするとどうなるの？
+            // 【同じアプリで着信通知を２つ出そうとするとどうなるの？】
             // 着信領域から着信拒否した着信通知のみを削除.
             val notificationId = when (intent.getIntExtra(NOTIFICATION_ID, 0)) {
                 NotificationId.CALL_REFUSE.id -> NotificationId.CALL

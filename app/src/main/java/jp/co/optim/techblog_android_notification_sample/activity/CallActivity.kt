@@ -29,7 +29,7 @@ class CallActivity : AppCompatActivity(), CallingFragment.Callback, TalkingFragm
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_call)
 
-        // 【調査２】 同じアプリで着信通知を２つ出そうとするとどうなるの？
+        // 【同じアプリで着信通知を２つ出そうとするとどうなるの？】
         // 着信領域から着信応答もしくは通知タップした着信通知のみを削除.
         val notificationId = when (intent.getIntExtra(CallRefusedReceiver.NOTIFICATION_ID, 0)) {
             NotificationId.CALL.id -> NotificationId.CALL
