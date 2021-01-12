@@ -21,6 +21,10 @@ android {
         }
     }
 
+    /**
+     * 【別のアプリでそれぞれ着信通知を出そうとしたらどうなるの？】
+     * productFlavors で applicationIdSuffix を指定することにより、パッケージ名を別物＝別アプリにする.
+     */
     flavorDimensions "mode"
 
     productFlavors {
