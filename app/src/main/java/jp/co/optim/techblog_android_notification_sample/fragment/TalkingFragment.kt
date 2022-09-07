@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import jp.co.optim.techblog_android_notification_sample.R
+import jp.co.optim.techblog_android_notification_sample.databinding.FragmentTalkingBinding
 import jp.co.optim.techblog_android_notification_sample.extension.tag
-import kotlinx.android.synthetic.main.fragment_talking.*
 
 class TalkingFragment : Fragment() {
 
@@ -15,19 +14,22 @@ class TalkingFragment : Fragment() {
         fun onCalledEnd()
     }
 
+    private var _binding: FragmentTalkingBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_talking, container, false)
+    ): View = run {
+        _binding = FragmentTalkingBinding.inflate(inflater, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        textView_talking.text = tag()
-        button_end.setOnClickListener {
+        binding.textViewTalking.text = tag()
+        binding.buttonEnd.setOnClickListener {
             getCallback()?.onCalledEnd()
         }
+
+        binding.root
     }
 
     private fun getCallback(): Callback? {

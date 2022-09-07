@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import jp.co.optim.techblog_android_notification_sample.R
+import jp.co.optim.techblog_android_notification_sample.databinding.FragmentCallingBinding
 import jp.co.optim.techblog_android_notification_sample.extension.tag
-import kotlinx.android.synthetic.main.fragment_calling.*
 
 class CallingFragment : Fragment() {
 
@@ -16,22 +15,25 @@ class CallingFragment : Fragment() {
         fun onCalledRefuse()
     }
 
+    private var _binding: FragmentCallingBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_calling, container, false)
+    ): View = run {
+        _binding = FragmentCallingBinding.inflate(inflater, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        textView_calling.text = tag()
-        button_accept.setOnClickListener {
+        binding.textViewCalling.text = tag()
+        binding.buttonAccept.setOnClickListener {
             getCallback()?.onCalledAccept()
         }
-        button_refuse.setOnClickListener {
+        binding.buttonRefuse.setOnClickListener {
             getCallback()?.onCalledRefuse()
         }
+
+        binding.root
     }
 
     private fun getCallback(): Callback? {

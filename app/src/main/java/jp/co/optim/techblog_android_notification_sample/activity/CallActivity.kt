@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import jp.co.optim.techblog_android_notification_sample.R
 import jp.co.optim.techblog_android_notification_sample.constants.NotificationId
+import jp.co.optim.techblog_android_notification_sample.databinding.ActivityCallBinding
 import jp.co.optim.techblog_android_notification_sample.extension.logD
 import jp.co.optim.techblog_android_notification_sample.extension.logI
 import jp.co.optim.techblog_android_notification_sample.extension.tag
@@ -18,6 +19,8 @@ class CallActivity : AppCompatActivity(), CallingFragment.Callback, TalkingFragm
         const val CALL_ACCEPTED = "call_accepted"
     }
 
+    private lateinit var binding: ActivityCallBinding
+
     private val notificationPostman = NotificationPostman()
 
     private val fragmentManager = supportFragmentManager
@@ -25,7 +28,9 @@ class CallActivity : AppCompatActivity(), CallingFragment.Callback, TalkingFragm
     override fun onCreate(savedInstanceState: Bundle?) {
         logD("onCreate()")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_call)
+
+        binding = ActivityCallBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // 通知領域から着信通知を削除
         notificationPostman.delete(this, NotificationId.CALL.id)
