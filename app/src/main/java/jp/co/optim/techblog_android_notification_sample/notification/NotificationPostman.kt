@@ -151,7 +151,7 @@ class NotificationPostman {
         context,
         notificationId,
         context.packageManager.getLaunchIntentForPackage(context.packageName),
-        PendingIntent.FLAG_CANCEL_CURRENT
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
     )
 
     private fun callPendingIntent(
@@ -160,7 +160,7 @@ class NotificationPostman {
         context,
         notificationId,
         Intent(context, CallActivity::class.java).putExtra(CallActivity.CALL_ACCEPTED, accepted),
-        PendingIntent.FLAG_UPDATE_CURRENT
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
     )
 
     private fun refusePendingIntent(
@@ -169,7 +169,7 @@ class NotificationPostman {
         context,
         notificationId,
         Intent(context, CallRefusedReceiver::class.java),
-        PendingIntent.FLAG_UPDATE_CURRENT
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
     )
 
     private fun getColorString(
