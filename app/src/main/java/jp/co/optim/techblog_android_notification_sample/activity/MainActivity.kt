@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import jp.co.optim.techblog_android_notification_sample.databinding.ActivityMainBinding
+import jp.co.optim.techblog_android_notification_sample.extension.TAG
 import jp.co.optim.techblog_android_notification_sample.extension.logI
-import jp.co.optim.techblog_android_notification_sample.extension.tag
 import jp.co.optim.techblog_android_notification_sample.notification.NotificationPostman
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.textViewMain.text = tag()
+        binding.textViewMain.text = TAG
         binding.buttonShowCalling.setOnClickListener {
             logI("Clicked showCalling.")
             startActivity(Intent(this, CallActivity::class.java))

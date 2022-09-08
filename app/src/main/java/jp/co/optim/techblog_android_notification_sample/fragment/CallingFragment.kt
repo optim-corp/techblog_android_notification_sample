@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import jp.co.optim.techblog_android_notification_sample.databinding.FragmentCallingBinding
-import jp.co.optim.techblog_android_notification_sample.extension.tag
+import jp.co.optim.techblog_android_notification_sample.extension.TAG
 
 class CallingFragment : Fragment() {
 
@@ -25,7 +25,7 @@ class CallingFragment : Fragment() {
     ): View = run {
         _binding = FragmentCallingBinding.inflate(inflater, container, false)
 
-        binding.textViewCalling.text = tag()
+        binding.textViewCalling.text = TAG
         binding.buttonAccept.setOnClickListener {
             getCallback()?.onCalledAccept()
         }

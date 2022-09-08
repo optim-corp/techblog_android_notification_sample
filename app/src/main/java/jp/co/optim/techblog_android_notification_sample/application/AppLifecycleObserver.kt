@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import jp.co.optim.techblog_android_notification_sample.constants.NotificationId
 import jp.co.optim.techblog_android_notification_sample.extension.logD
+import jp.co.optim.techblog_android_notification_sample.extension.logE
 import jp.co.optim.techblog_android_notification_sample.extension.logI
 import jp.co.optim.techblog_android_notification_sample.notification.NotificationPostman
 
@@ -27,13 +28,13 @@ class AppLifecycleObserver(private val context: Context) : LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
         logD("onResume()")
-        val notification = notificationPostman.findNotification(context, NotificationId.CALL.id)
-        if (notification != null) {
+        notificationPostman.findNotification(context, NotificationId.CALL.id)?.let {
             logI("Found call notification. Send fullScreenIntent.")
             try {
                 notificationPostman.delete(context, NotificationId.CALL.id)
-                notification.fullScreenIntent.send()
+                it.fullScreenIntent.send()
             } catch (e : PendingIntent.CanceledException) {
+                logE("Failed to send the full screen intent.")
                 e.printStackTrace()
             }
         }

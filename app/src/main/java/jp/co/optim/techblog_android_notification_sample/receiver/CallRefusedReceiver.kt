@@ -9,14 +9,14 @@ import jp.co.optim.techblog_android_notification_sample.notification.Notificatio
 
 class CallRefusedReceiver: BroadcastReceiver() {
 
-    private val notificationPostman = NotificationPostman();
+    private val notificationPostman = NotificationPostman()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         logD("onReceive()")
 
-        if (context != null) {
+        context?.let {
             // 通知領域から着信通知を削除
-            notificationPostman.delete(context, NotificationId.CALL.id)
+            notificationPostman.delete(it, NotificationId.CALL.id)
         }
     }
 }

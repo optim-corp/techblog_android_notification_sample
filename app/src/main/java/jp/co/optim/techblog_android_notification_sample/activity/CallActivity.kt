@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import jp.co.optim.techblog_android_notification_sample.R
 import jp.co.optim.techblog_android_notification_sample.constants.NotificationId
 import jp.co.optim.techblog_android_notification_sample.databinding.ActivityCallBinding
+import jp.co.optim.techblog_android_notification_sample.extension.TAG
 import jp.co.optim.techblog_android_notification_sample.extension.logD
 import jp.co.optim.techblog_android_notification_sample.extension.logI
-import jp.co.optim.techblog_android_notification_sample.extension.tag
 import jp.co.optim.techblog_android_notification_sample.fragment.CallingFragment
 import jp.co.optim.techblog_android_notification_sample.fragment.TalkingFragment
 import jp.co.optim.techblog_android_notification_sample.notification.NotificationPostman
@@ -56,7 +56,7 @@ class CallActivity : AppCompatActivity(), CallingFragment.Callback, TalkingFragm
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        logI("Replace fragment: ${fragment.tag()}")
+        logI("Replace fragment: ${fragment.TAG}")
         fragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, fragment)
         }.commit()

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import jp.co.optim.techblog_android_notification_sample.databinding.FragmentTalkingBinding
-import jp.co.optim.techblog_android_notification_sample.extension.tag
+import jp.co.optim.techblog_android_notification_sample.extension.TAG
 
 class TalkingFragment : Fragment() {
 
@@ -24,7 +24,7 @@ class TalkingFragment : Fragment() {
     ): View = run {
         _binding = FragmentTalkingBinding.inflate(inflater, container, false)
 
-        binding.textViewTalking.text = tag()
+        binding.textViewTalking.text = TAG
         binding.buttonEnd.setOnClickListener {
             getCallback()?.onCalledEnd()
         }
