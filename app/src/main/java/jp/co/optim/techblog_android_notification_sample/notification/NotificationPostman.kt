@@ -1,9 +1,6 @@
 package jp.co.optim.techblog_android_notification_sample.notification
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -12,6 +9,7 @@ import android.media.AudioManager
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.ColorRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -119,6 +117,54 @@ class NotificationPostman {
         }.build()
 
         // 5. Notificationにフラグを追加
+        notification.flags = notification.flags or Notification.FLAG_NO_CLEAR or Notification.FLAG_INSISTENT
+        manager.notify(NotificationId.CALL.id, notification)
+    }
+
+    /**
+     * 新しい着信通知をポストする.
+     * Android 12 (API 31) 以降の OS バージョンで使用可能.
+     */
+    @RequiresApi(Build.VERSION_CODES.S)
+    fun postNewCall(
+        context: Context,
+        @StringRes titleResId: Int = R.string.app_name,
+        callerName: String = "OPTiM Corp."
+    ) {
+        logD("postNewCall()")
+        val title = context.getString(titleResId)
+        val ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
+
+        val channel = NotificationChannel(ChannelType.CALL.id, title, NotificationManager.IMPORTANCE_HIGH).apply {
+            val attributes = AudioAttributes.Builder().apply {
+                setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+            }.build()
+            setSound(ringtoneUri, attributes)
+        }
+
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createNotificationChannel(channel)
+
+        // 発信者の情報を生成
+        val person = Person.Builder().apply {
+            setName(callerName) // 発信者名
+            setImportant(true)  // 通知の優先度を上げるため重要人物であることを示すフラグを設定
+        }.build()
+
+        val notification = Notification.Builder(context, ChannelType.CALL.id).apply {
+            setSmallIcon(R.drawable.app_icon_small)
+            setFullScreenIntent(callPendingIntent(context, NotificationId.CALL.id), true)
+            // 通知スタイルを着信専用に設定
+            setStyle(
+                Notification.CallStyle.forIncomingCall(
+                    person,
+                    refusePendingIntent(context, NotificationId.CALL_REFUSE.id),
+                    callPendingIntent(context, NotificationId.CALL_ACCEPT.id, true)
+                )
+            )
+        }.build()
+
         notification.flags = notification.flags or Notification.FLAG_NO_CLEAR or Notification.FLAG_INSISTENT
         manager.notify(NotificationId.CALL.id, notification)
     }

@@ -4,6 +4,7 @@
     <string name="button_showCalling">着信画面を表示</string>
     <string name="button_postNotification">通知をポスト</string>
     <string name="button_postCallNotification">着信通知をポスト</string>
+    <string name="button_postNewCallNotification">新しい着信通知をポスト</string>
 
     <string name="button_accept">応答</string>
     <string name="button_refuse">拒否</string>
