@@ -2,32 +2,19 @@ package jp.co.optim.techblog_android_notification_sample.application
 
 import android.app.PendingIntent
 import android.content.Context
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import jp.co.optim.techblog_android_notification_sample.constants.NotificationId
-import jp.co.optim.techblog_android_notification_sample.extension.logD
 import jp.co.optim.techblog_android_notification_sample.extension.logE
 import jp.co.optim.techblog_android_notification_sample.extension.logI
 import jp.co.optim.techblog_android_notification_sample.notification.NotificationPostman
 
-class AppLifecycleObserver(private val context: Context) : LifecycleObserver {
+class AppLifecycleObserver(private val context: Context) : DefaultLifecycleObserver {
 
     private val notificationPostman = NotificationPostman()
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun onCreate() {
-        logD("onCreate()")
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onStart() {
-        logD("onStart()")
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
-        logD("onResume()")
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
         notificationPostman.findNotification(context, NotificationId.CALL.id)?.let {
             logI("Found call notification. Send fullScreenIntent.")
             try {
@@ -38,20 +25,5 @@ class AppLifecycleObserver(private val context: Context) : LifecycleObserver {
                 e.printStackTrace()
             }
         }
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun onPause() {
-        logD("onPause()")
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStop() {
-        logD("onStop()")
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy() {
-        logD("onDestroy()")
     }
 }
