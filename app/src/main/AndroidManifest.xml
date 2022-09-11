@@ -4,6 +4,8 @@
 
     <!-- 全画面表示のパーミッション追加 -->
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <!-- Android 13 以降に必要な通知パーミッション追加 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:name=".application.SampleApplication"
