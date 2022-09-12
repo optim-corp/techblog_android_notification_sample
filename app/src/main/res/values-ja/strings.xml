@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">通知サンプル</string>
+    <string name="ok">OK</string>
 
     <string name="button_showCalling">着信画面を表示</string>
     <string name="button_postNotification">通知をポスト</string>
@@ -12,4 +13,9 @@
 
     <string name="notification_message">通知サンプルです。</string>
     <string name="notification_call_message">着信通知サンプルです。</string>
+
+    <string name="request_permission_dialog_title">必要な権限が許可されていません</string>
+    <string name="request_permission_dialog_message">通知を受け取るために通知の権限を許可してください。</string>
+    <string name="granted_permission_snackbar_message">これ以降は通知を受け取ることが可能です。</string>
+    <string name="denied_permission_snackbar_message">権限が拒否されました。通知を受け取ることができません。</string>
 </resources>
