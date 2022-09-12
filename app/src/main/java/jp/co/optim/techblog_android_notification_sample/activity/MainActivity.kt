@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(), AlertDialogFragment.Callback {
 
     private val notificationPostman = NotificationPostman()
 
+    // ランタイムパーミッションの結果.
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             Snackbar.make(
@@ -77,21 +78,30 @@ class MainActivity : AppCompatActivity(), AlertDialogFragment.Callback {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             throw InternalError("Conflicted OS version.")
         }
+        // 権限が必要な理由を提示したので、ランタイムパーミッションをリクエストする.
         logI("Launch the request of the permission.")
         requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
+    /**
+     * 通知権限が許可されているか確認する.
+     * https://developer.android.com/training/permissions/requesting?hl=ja
+     */
     private fun checkNotificationPermission(): Boolean {
+        // バージョン確認. Android13 未満は不要.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             logI("No needed the permission.")
             return true
         }
+        // 権限が許可されているか確認.
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.POST_NOTIFICATIONS)
             == PackageManager.PERMISSION_GRANTED) {
             logI("The permission is granted already.")
             return true
         }
+        // 権限を必要とする理由を提示する必要があるか確認.
+        // 必要がある場合は、アプリ側がその理由を明示的に説明する.
         if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
             logI("App should show the request of permission rationale.")
             AlertDialogFragment.newInstance(
@@ -101,6 +111,7 @@ class MainActivity : AppCompatActivity(), AlertDialogFragment.Callback {
             ).show(supportFragmentManager, null)
             return false
         }
+        // 権限をリクエストする.
         logI("Launch the request of the permission.")
         requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         return false
