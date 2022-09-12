@@ -17,6 +17,9 @@ import jp.co.optim.techblog_android_notification_sample.extension.logW
 import jp.co.optim.techblog_android_notification_sample.fragment.AlertDialogFragment
 import jp.co.optim.techblog_android_notification_sample.notification.NotificationPostman
 
+/**
+ * メイン画面を表示するためのアクティビティクラス.
+ */
 class MainActivity : AppCompatActivity(), AlertDialogFragment.Callback {
 
     private lateinit var binding: ActivityMainBinding

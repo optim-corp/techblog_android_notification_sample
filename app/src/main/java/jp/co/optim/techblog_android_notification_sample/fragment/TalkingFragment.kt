@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import jp.co.optim.techblog_android_notification_sample.databinding.FragmentTalkingBinding
 import jp.co.optim.techblog_android_notification_sample.extension.TAG
 
+/**
+ * ダミーの通話画面フラグメントクラス.
+ */
 class TalkingFragment : Fragment() {
 
     interface Callback {

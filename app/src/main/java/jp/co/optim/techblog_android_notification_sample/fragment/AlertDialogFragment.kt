@@ -7,6 +7,9 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 
+/**
+ * アラートダイアログを表示するためのクラス.
+ */
 class AlertDialogFragment : DialogFragment() {
 
     interface Callback {

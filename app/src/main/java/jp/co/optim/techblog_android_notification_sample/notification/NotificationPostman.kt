@@ -22,6 +22,9 @@ import jp.co.optim.techblog_android_notification_sample.extension.logD
 import jp.co.optim.techblog_android_notification_sample.receiver.CallRefusedReceiver
 import java.util.*
 
+/**
+ * 通知関連の処理をするためのクラス.
+ */
 class NotificationPostman {
 
     /**

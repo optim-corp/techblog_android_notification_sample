@@ -7,6 +7,9 @@ import jp.co.optim.techblog_android_notification_sample.constants.NotificationId
 import jp.co.optim.techblog_android_notification_sample.extension.logD
 import jp.co.optim.techblog_android_notification_sample.notification.NotificationPostman
 
+/**
+ * 着信通知を拒否したときの処理をするレシーバークラス.
+ */
 class CallRefusedReceiver: BroadcastReceiver() {
 
     private val notificationPostman = NotificationPostman()

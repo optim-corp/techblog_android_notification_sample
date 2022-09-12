@@ -9,6 +9,9 @@ import jp.co.optim.techblog_android_notification_sample.extension.logE
 import jp.co.optim.techblog_android_notification_sample.extension.logI
 import jp.co.optim.techblog_android_notification_sample.notification.NotificationPostman
 
+/**
+ * アプリのライフサイクルを監視するためのクラス.
+ */
 class AppLifecycleObserver(private val context: Context) : DefaultLifecycleObserver {
 
     private val notificationPostman = NotificationPostman()

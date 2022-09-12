@@ -3,6 +3,9 @@ package jp.co.optim.techblog_android_notification_sample.application
 import android.app.Application
 import androidx.lifecycle.ProcessLifecycleOwner
 
+/**
+ * カスタムのアプリケーションクラス.
+ */
 class SampleApplication : Application() {
 
     private val lifecycleObserver = AppLifecycleObserver(this)

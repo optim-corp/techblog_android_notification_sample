@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import jp.co.optim.techblog_android_notification_sample.databinding.FragmentCallingBinding
 import jp.co.optim.techblog_android_notification_sample.extension.TAG
 
+/**
+ * ダミーの着信画面フラグメントクラス.
+ */
 class CallingFragment : Fragment() {
 
     interface Callback {

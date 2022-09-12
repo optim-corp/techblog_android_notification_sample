@@ -13,6 +13,11 @@ import jp.co.optim.techblog_android_notification_sample.fragment.CallingFragment
 import jp.co.optim.techblog_android_notification_sample.fragment.TalkingFragment
 import jp.co.optim.techblog_android_notification_sample.notification.NotificationPostman
 
+/**
+ * ダミーの着信画面・通話画面を表示するためのアクティビティクラス.
+ * @see CallingFragment 着信画面
+ * @see TalkingFragment 通話画面
+ */
 class CallActivity : AppCompatActivity(), CallingFragment.Callback, TalkingFragment.Callback {
 
     companion object {
