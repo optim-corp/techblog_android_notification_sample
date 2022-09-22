@@ -12,3 +12,11 @@ OPTiM TECH BLOG 用の通知サンプルアプリです。
 ※ 使用端末: Android Emulator (Pixel 4a, API33)
 
 <img src="./image/normal_notification.png" width="30%"> <img src="./image/call_notification.png" width="30%"> <img src="./image/new_call_notification.png" width="30%">
+
+## 開発環境
+
+* Android Studio Dolphin | 2021.3.1
+
+## ライセンス
+
+* [MIT License](./LICENSE)
